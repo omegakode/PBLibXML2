@@ -18,12 +18,12 @@ CompilerIf #PB_Compiler_OS = #PB_OS_Windows
 	ImportC #LIBXML2_LIB_PATH + "zlib.lib"
 	EndImport
 
-CompilerElseIf #PB_Compiler_OS = #PB_OS_Linux
+CompilerElseIf #PB_Compiler_OS = #PB_OS_Linux Or #PB_Compiler_OS = #PB_OS_MacOS
 	#LIBXML2_LIB_PATH = ""
 	#LIBXML2_LIB_NAME = "-lxml2"
 
-CompilerElseIf #PB_Compiler_OS = #PB_OS_MacOS
-	Debug "Error, macos not supported"
+CompilerElse
+	Debug "Error, OS not supported"
 	End
 CompilerEndIf
 
