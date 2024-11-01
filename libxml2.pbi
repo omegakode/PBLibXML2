@@ -7,25 +7,27 @@ CompilerEndIf
 
 CompilerIf #PB_Compiler_OS = #PB_OS_Windows
 	#LIBXML2_LIB_PATH = "lib\windows\x64\"
+	#LIBXML2_LIB_NAME = "libxml2.lib"
+	
+	Import #LIBXML2_LIB_PATH + "libmsvcrt.a"
+	EndImport
+	
+	ImportC #LIBXML2_LIB_PATH + "lzma.lib"
+	EndImport
+	
+	ImportC #LIBXML2_LIB_PATH + "zlib.lib"
+	EndImport
 
 CompilerElseIf #PB_Compiler_OS = #PB_OS_Linux
-	Debug "Error, only windows supported"
-	End
+	#LIBXML2_LIB_PATH = ""
+	#LIBXML2_LIB_NAME = "-lxml2"
+
 CompilerElseIf #PB_Compiler_OS = #PB_OS_MacOS
-	Debug "Error, only windows supported"
+	Debug "Error, macos not supported"
 	End
 CompilerEndIf
 
-Import #LIBXML2_LIB_PATH + "libmsvcrt.a"
-EndImport
-
-ImportC #LIBXML2_LIB_PATH + "lzma.lib"
-EndImport
-
-ImportC #LIBXML2_LIB_PATH + "zlib.lib"
-EndImport
-
-ImportC #LIBXML2_LIB_PATH + "libxml2.lib"
+ImportC #LIBXML2_LIB_PATH + #LIBXML2_LIB_NAME
 	xmlInitParser.l()
 	xmlParseFile.i(file.p-utf8)
 	xmlFreeDoc.l(doc.i)
